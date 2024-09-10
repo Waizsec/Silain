@@ -2,6 +2,7 @@ from flask import Flask, g, request, jsonify
 import sqlite3
 import database
 import auth
+import data_prepro_sql
 
 app = Flask(__name__)
 
