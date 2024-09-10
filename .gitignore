@@ -1,1 +1,45 @@
 .DS_Store
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Virtual Environment
+venv/
+.env/
+*.env
+
+# SQLite database
+*.db
+
+# Flask instance folder
+instance/
+
+# Log files
+*.log
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Mac system files
+.DS_Store
+
+# Python egg files
+*.egg
+*.egg-info/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.pyc
+
+# Flask-specific
+*.flaskenv
