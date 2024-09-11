@@ -438,9 +438,9 @@ def run_sql():
 
     # Create tables for each DataFrame
 
-    # Create table for data1
+    # Create table for fact_jumlah_produksi_ikan_jenis_ikan (formerly fact_produksi_nilai_produksi_perikanan_tangkap_laut)
     cursor.execute('''
-    CREATE TABLE IF NOT EXISTS fact_nilai_produksi_provinsi_dan_jenis (
+    CREATE TABLE IF NOT EXISTS fact_jumlah_produksi_ikan_jenis_ikan (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         [Jenis Usaha] TEXT,
         Provinsi TEXT,
@@ -451,9 +451,9 @@ def run_sql():
     )
     ''')
 
-    # Create table for data2
+    # Create table for fact_jumlah_produksi_ikan_medan (formerly fact_nilai_produksi_perikanan_tangkap_perairan_umum)
     cursor.execute('''
-    CREATE TABLE IF NOT EXISTS fact_nilai_produksi_perikanan_tangkap_perairan_umum (
+    CREATE TABLE IF NOT EXISTS fact_jumlah_produksi_ikan_medan (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         [Jenis Usaha] TEXT,
         Provinsi TEXT,
@@ -464,9 +464,9 @@ def run_sql():
     )
     ''')
 
-    # Create table for data3
+    # Create table for fact_jumlah_produksi_ikan_metode (formerly fact_nilai_produksi_provinsi_dan_jenis)
     cursor.execute('''
-    CREATE TABLE IF NOT EXISTS fact_produksi_nilai_produksi_perikanan_tangkap_laut (
+    CREATE TABLE IF NOT EXISTS fact_jumlah_produksi_ikan_metode (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         [Jenis Usaha] TEXT,
         Provinsi TEXT,
@@ -477,9 +477,9 @@ def run_sql():
     )
     ''')
 
-    # Create table for data4
+    # Create table for fact_jumlah_produksi_ikan_wilayah (formerly fact_produksi_perikanan_tangkap)
     cursor.execute('''
-    CREATE TABLE IF NOT EXISTS fact_produksi_perikanan_tangkap (
+    CREATE TABLE IF NOT EXISTS fact_jumlah_produksi_ikan_wilayah (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         [Jenis Usaha] TEXT,
         Provinsi TEXT,
@@ -489,20 +489,6 @@ def run_sql():
         [Nilai Produksi] INTEGER
     )
     ''')
-
-    # Create table for data5
-    cursor.execute('''
-    CREATE TABLE IF NOT EXISTS fact_produksi_perikanan_jenis_ikan_tangkap_laut (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        [Jenis Usaha] TEXT,
-        Provinsi TEXT,
-        [Jenis Ikan] TEXT,
-        Tahun INTEGER,
-        [Volume Produksi] INTEGER,
-        [Nilai Produksi] INTEGER
-    )
-    ''')
-
     # Create dimension tables
     cursor.execute('''
     CREATE TABLE IF NOT EXISTS dim_province (
@@ -540,16 +526,16 @@ def run_sql():
     )
     ''')
 
-    # Insert data into tables
-    data1.to_sql('fact_nilai_produksi_provinsi_dan_jenis',
+   # Insert data into renamed tables
+    data1.to_sql('fact_jumlah_produksi_ikan_metode',
                  conn, if_exists='replace', index=False)
-    data2.to_sql('fact_nilai_produksi_perikanan_tangkap_perairan_umum',
+    data2.to_sql('fact_jumlah_produksi_ikan_medan',
                  conn, if_exists='replace', index=False)
-    data3.to_sql('fact_produksi_nilai_produksi_perikanan_tangkap_laut',
+    data3.to_sql('fact_jumlah_produksi_ikan_jenis_ikan',
                  conn, if_exists='replace', index=False)
-    data4.to_sql('fact_produksi_perikanan_tangkap',
+    data4.to_sql('fact_jumlah_produksi_ikan_wilayah',
                  conn, if_exists='replace', index=False)
-    data5.to_sql('fact_produksi_perikanan_jenis_ikan_tangkap_laut',
+    data5.to_sql('fact_jumlah_produksi_ikan_jenis_ikan_tangkap_laut',
                  conn, if_exists='replace', index=False)
 
     dim_province.to_sql('dim_province', conn, if_exists='replace', index=False)

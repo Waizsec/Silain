@@ -4,6 +4,7 @@
 *.pyo
 *.pyd
 __pycache__/
+app/node_modules
 
 # Virtual Environment
 venv/

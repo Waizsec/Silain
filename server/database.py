@@ -26,6 +26,33 @@ def init_db():
     conn.close()
 
 
+def drop_tables():
+    # Replace with your actual database path
+    conn = sqlite3.connect('database.db')
+    cursor = conn.cursor()
+
+    # List of tables to drop
+    tables = [
+        'fact_nilai_produksi_provinsi_dan_jenis',
+        'fact_nilai_produksi_perikanan_tangkap_perairan_umum',
+        'fact_produksi_nilai_produksi_perikanan_tangkap_laut',
+        'fact_produksi_perikanan_tangkap',
+        'fact_produksi_perikanan_jenis_ikan_tangkap_laut',
+        'dim_province',
+        'dim_category',
+        'dim_jenis_ikan',
+        'dim_location',
+        'dim_method'
+    ]
+
+    # Loop through tables and drop them
+    for table in tables:
+        cursor.execute(f"DROP TABLE IF EXISTS {table}")
+
+    conn.commit()
+    conn.close()
+
+
 # Main entry to initialize the database, can be run directly if needed
 if __name__ == '__main__':
     init_db()
