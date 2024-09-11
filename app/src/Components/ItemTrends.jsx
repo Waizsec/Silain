@@ -42,14 +42,14 @@ const ItemTrends = () => {
         <div className="w-[40%] bg-white px-[3vw] py-[2.5vw] mr-[1vw]">
             <div className="flex items-center justify-between">
                 <div>
-                    <h1 className="text-[1.2vw]">Jumlah Ikan (Berdasarkan Medan)</h1>
+                    <h1 className="text-[1.2vw] mr-[2vw]">Nilai Produksi Ikan (Rp) Berdasarkan Medan</h1>
                 </div>
 
                 <div className="flex flex-col">
                     <select
                         name="province"
                         id="province"
-                        className="text-[1vw] mt-[0.3vw] outline-none"
+                        className="text-[1vw] mt-[0.3vw] outline-none w-[7vw]"
                         value={selectedProvince}
                         onChange={(e) => setSelectedProvince(e.target.value)}
                     >
@@ -66,7 +66,7 @@ const ItemTrends = () => {
                     <select
                         name="year"
                         id="year"
-                        className="text-[1vw] mt-[0.3vw] outline-none"
+                        className="text-[1vw] mt-[0.3vw] outline-none w-[4vw]"
                         value={selectedYear}
                         onChange={(e) => setSelectedYear(e.target.value)}
                     >

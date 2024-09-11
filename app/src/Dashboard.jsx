@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'; // Assuming you are using react-router for navigation
-import { BestSellingItems, CashflowCounts, AverageGrowth, General, ItemTrends, LineUserCounts, UserCounts } from './Components';
+import { BestSellingItems, AverageGrowth, ItemTrends, UserCounts } from './Components';
 
 const Dashboard = (props) => {
     const username = sessionStorage.getItem('username');

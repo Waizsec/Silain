@@ -59,7 +59,7 @@ def login(username, password):
 
 def create_user():
     # Hardcoded username and password
-    username = 'Anan'
+    username = 'KelD'
     password = '123'
 
     conn = connect_db()
@@ -90,3 +90,23 @@ def create_user():
     except sqlite3.IntegrityError:
         conn.close()
         return f"User '{username}' already exists.", 400
+
+
+def deleteuser():
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    # Define the usernames to delete
+    usernames_to_delete = ('')
+
+    # Execute the DELETE query
+    cursor.execute(
+        'DELETE FROM tb_users WHERE username IN (?, ?)', usernames_to_delete)
+
+    # Commit the changes
+    conn.commit()
+
+    # Close the connection
+    conn.close()
+
+    return "Succed"

@@ -41,7 +41,7 @@ const AverageGrowth = () => {
         <div className="w-full bg-white mt-[2vw] py-[2vw] rounded-sm px-[3vw] flex justify-between">
             <div className="flex justify-between mb-[3vw]">
                 <div>
-                    <h1 className="text-[1.4vw] w-[18vw]">Jumlah Ikan (Berdasarkan Perairan Laut & Umum)</h1>
+                    <h1 className="text-[1.4vw] w-[18vw]">Jumlah Ikan (Ton) Berdasarkan Perairan Laut & Umum</h1>
                     <select
                         name="date"
                         id="date"

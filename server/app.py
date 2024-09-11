@@ -17,12 +17,50 @@ def index():
     # data_prepro_sql.run_sql()
     return f"Tables in the database: {tables}"
 
+
 # API Data
-
-
 @app.route('/data-ikan-berdasarkan-jenis-ikan-tangkap-laut', methods=['GET'])
 def data_ikan_tangkap_laut():
-    return "data"
+    # Connect to the database
+    db = database.connect_db()
+    cursor = db.cursor()
+
+    query = '''
+    SELECT 
+        CASE 
+            WHEN length(p."Province Name") > 0 THEN 
+                upper(substr(p."Province Name", 1, 1)) || lower(substr(p."Province Name", 2))
+            ELSE 
+                p."Province Name"
+        END AS province_name,
+        d."Jenis Ikan Name" AS jenis_ikan,
+        f."Nilai Produksi" AS total_value
+    FROM 
+        fact_jumlah_produksi_ikan_jenis_ikan_tangkap_laut f
+    JOIN 
+        dim_jenis_ikan d ON f."Jenis Ikan" = d."Jenis Ikan Code"
+    JOIN 
+        dim_province p ON f."Province" = p."Province Code"
+    WHERE
+        p."Province Name" IS NOT NULL AND
+        f."Jenis Ikan" IS NOT NULL
+    GROUP BY 
+        p."Province Name", 
+        f."Jenis Ikan"
+    '''
+
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    columns = [description[0] for description in cursor.description]
+
+    # Convert rows to list of dictionaries
+    result = [dict(zip(columns, row)) for row in rows]
+
+    # Close the database connection
+    db.close()
+
+    # Return the result as JSON
+    return jsonify(result)
 
 
 @app.route('/data-ikan-berdasarkan-medan', methods=['GET'])
@@ -70,7 +108,45 @@ def data_ikan_medan():
 
 @app.route('/data-ikan-berdasarkan-metode', methods=['GET'])
 def data_ikan_metode():
-    return "data"
+    # Connect to the database
+    db = database.connect_db()
+    cursor = db.cursor()
+
+    # SQL query to join tables and select the required columns
+    query = '''
+        SELECT
+            f."Year" AS year,
+            CASE 
+                WHEN length(p."Province Name") > 0 THEN 
+                    upper(substr(p."Province Name", 1, 1)) || lower(substr(p."Province Name", 2))
+                ELSE 
+                    p."Province Name"
+            END AS province,
+            m."Method Name" AS method,
+            f."Value" AS value
+        FROM
+            fact_jumlah_produksi_ikan_metode f
+        JOIN
+            dim_province p ON f."Province" = p."Province Code"
+        JOIN
+            dim_method m ON f."Method" = m."Method Code"
+        WHERE
+            f."Value" IS NOT NULL
+        '''
+
+    # Execute the query
+    cursor.execute(query)
+    rows = cursor.fetchall()
+    columns = [description[0] for description in cursor.description]
+
+    # Convert rows to list of dictionaries
+    result = [dict(zip(columns, row)) for row in rows]
+
+    # Close the database connection
+    db.close()
+
+    # Return the result as JSON
+    return jsonify(result)
 
 
 @app.route('/data-ikan-berdasarkan-wilayah', methods=['GET'])
@@ -122,8 +198,6 @@ def data_ikan_wilayah():
 
 
 # Authentifikasi
-
-
 @app.route('/login', methods=['POST'])
 def login():
     username = request.form.get('username')
@@ -146,16 +220,22 @@ def verify_key():
     return jsonify({'valid': valid})
 
 
-@app.route('/createuser', methods=['GET'])
-def create_user():
-    return auth.create_user()
-
-
 # Database
 @app.route('/drop', methods=['GET'])
 def drop():
     database.drop_tables()
     return "Succed"
+
+
+@app.route('/deleteuser', methods=['GET'])
+def delete_users():
+    # Connect to the database
+    return auth.deleteuser()
+
+
+@app.route('/createuser', methods=['GET'])
+def create_user():
+    return auth.create_user()
 
 
 if __name__ == '__main__':

@@ -81,7 +81,7 @@ function App() {
         {/* Right Background */}
         <div className="w-[50vw] overflow-hidden bg-auth rounded-bl-[10vw] items-center justify-center">
           <div className="w-full h-full flex items-center justify-center">
-            <img src="../public/fav.png" className='w-[6vw] mr-[2vw]' />
+            <img src="/fav.png" className='w-[6vw] mr-[2vw]' />
             <h1 className="text-[6vw] text-white font-semibold">
               Silain
             </h1>
